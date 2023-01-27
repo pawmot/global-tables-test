@@ -4,12 +4,12 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import { RemovalPolicy } from 'aws-cdk-lib';
 
 export class GlobalTableStack extends cdk.Stack {
-  public table: dynamodb.ITable;
+  public readonly tableName: string;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    /*const table = new dynamodb.CfnGlobalTable(this, 'GlobalTable', {
+    const table = new dynamodb.CfnGlobalTable(this, 'GlobalTable', {
       keySchema: [{
         attributeName: 'id',
         keyType: 'HASH'
@@ -27,19 +27,10 @@ export class GlobalTableStack extends cdk.Stack {
       streamSpecification: {
         streamViewType: 'NEW_AND_OLD_IMAGES'
       }
-    });*/
-
-    const table = new dynamodb.Table(this, 'GlobalTable', {
-      partitionKey: {
-        name: 'id',
-        type: dynamodb.AttributeType.STRING
-      },
-      removalPolicy: RemovalPolicy.DESTROY,
-      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      replicationRegions: ['eu-central-1'],
     });
-
     table.applyRemovalPolicy(RemovalPolicy.DESTROY);
+
+    this.tableName = table.ref;
   }
 }
 

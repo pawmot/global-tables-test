@@ -11,18 +11,18 @@ const globalTableStack = new GlobalTableStack(app, 'GlobalTableStack', {
   },
 });
 
-/*new FunctionStack(app, 'FunctionStackIreland', {
+new FunctionStack(app, 'FunctionStackIreland', {
   env: {
-    region: 'eu-west-1'
+    region: 'eu-west-1',
   },
-  crossRegionReferences: true
-});*/
+  tableName: globalTableStack.tableName,
+});
 
-/*new FunctionStack(app, 'FunctionStackFrankfurt', {
-  table: globalTableStack.table,
+new FunctionStack(app, 'FunctionStackFrankfurt', {
   env: {
     region: 'eu-central-1',
   },
+  tableName: globalTableStack.tableName,
   crossRegionReferences: true
-});*/
+});
 

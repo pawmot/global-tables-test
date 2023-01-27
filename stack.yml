@@ -1,0 +1,48 @@
+yarn run v1.22.19
+$ cdk synth
+Resources:
+  GlobalTable:
+    Type: AWS::DynamoDB::GlobalTable
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      Replicas:
+        - Region: eu-west-1
+        - Region: eu-central-1
+      BillingMode: PAY_PER_REQUEST
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: GlobalTableStack/GlobalTable
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/yXIvQqAIBRA4Wdx11tGQXtDe7XHVW9gmkL2Q0TvXtB0+E4BVQk5wzMJbZzwVsHdb6gd/9ZoroBLNAqaKbQ+KvQDKk/8Y0cp7qumh4doCOaUHbIGWYBkc7JWrHvY7ELQ/X0BGPoLQmgAAAA=
+    Metadata:
+      aws:cdk:path: GlobalTableStack/CDKMetadata/Default
+Parameters:
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - "1"
+                  - "2"
+                  - "3"
+                  - "4"
+                  - "5"
+                - Ref: BootstrapVersion
+        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
+
+Done in 6.49s.
