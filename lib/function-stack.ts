@@ -54,7 +54,7 @@ export class FunctionStack extends cdk.Stack {
     new lambda.EventSourceMapping(this, 'event-source-mapping', {
       eventSourceArn: streamArnResource.getAttString('StreamArn'),
       target: fn,
-      startingPosition: lambda.StartingPosition.TRIM_HORIZON,
+      startingPosition: lambda.StartingPosition.LATEST,
       batchSize: 1,
     });
 
